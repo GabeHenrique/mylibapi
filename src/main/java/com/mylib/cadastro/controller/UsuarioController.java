@@ -1,7 +1,7 @@
-package com.mylib.controller;
+package com.mylib.cadastro.controller;
 
-import com.mylib.model.Usuario;
-import com.mylib.repository.UsuarioRepository;
+import com.mylib.cadastro.model.Usuario;
+import com.mylib.cadastro.repository.UsuarioRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;

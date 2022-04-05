@@ -1,10 +1,6 @@
-create table categoria (
-    codigo BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
-    nome VARCHAR(50) NOT NULL
+create table cd_categoria (
+    categoria_id SERIAL PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(50) NOT NULL,
+    descricao VARCHAR(255)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO categoria (nome) values ('lazer');
-INSERT INTO categoria (nome) values ('Alimentação');
-INSERT INTO categoria (nome) values ('Supermercado');
-INSERT INTO categoria (nome) values ('Farmácia');
-INSERT INTO categoria (nome) values ('Outros');

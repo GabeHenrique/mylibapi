@@ -1,7 +1,7 @@
-package com.mylib.controller;
+package com.mylib.cadastro.controller;
 
-import com.mylib.model.Categoria;
-import com.mylib.repository.CategoriaRepository;
+import com.mylib.cadastro.model.Categoria;
+import com.mylib.cadastro.repository.CategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,17 +25,17 @@ public class CategoriaController {
         return !categorias.isEmpty() ? ResponseEntity.ok(categorias) : ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/{codigo}")
-    public ResponseEntity<?> buscarPelaId(@PathVariable Long codigo) {
-        Optional<Categoria> categoria = categoriaRepository.findById(codigo);
+    @GetMapping("/{id}")
+    public ResponseEntity<?> buscarPelaId(@PathVariable Integer id) {
+        Optional<Categoria> categoria = categoriaRepository.findById(id);
         return categoria.isPresent() ? ResponseEntity.ok(categoria) : ResponseEntity.noContent().build();
     }
 
     @PostMapping
     public ResponseEntity<Categoria> criar(@RequestBody Categoria categoria, HttpServletResponse response) {
         Categoria categoriaSalva = categoriaRepository.save(categoria);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{codigo}")
-                .buildAndExpand(categoriaSalva.getCodigo()).toUri();
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}")
+                .buildAndExpand(categoriaSalva.getId()).toUri();
         response.setHeader("Location", uri.toASCIIString());
         return ResponseEntity.created(uri).body(categoriaSalva);
     }

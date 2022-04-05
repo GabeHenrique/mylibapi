@@ -1,4 +1,4 @@
-package com.mylib.enums;
+package com.mylib.cadastro.enums;
 
 public enum NivelAcesso {
     COLABORADOR,

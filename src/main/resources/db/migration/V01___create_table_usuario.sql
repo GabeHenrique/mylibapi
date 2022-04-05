@@ -1,5 +1,5 @@
 create table cd_usuario (
-                            id BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
+                            id SERIAL PRIMARY KEY AUTO_INCREMENT,
                             nome VARCHAR(150) NOT NULL,
                             email VARCHAR(150) NOT NULL,
                             senha VARCHAR(12) NOT NULL,

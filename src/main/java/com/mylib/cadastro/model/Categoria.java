@@ -1,5 +1,7 @@
-package com.mylib.model;
+package com.mylib.cadastro.model;
 
+import com.mylib.cadastro.controller.CategoriaController;
+import com.mylib.cadastro.repository.CategoriaRepository;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,15 +14,14 @@ import javax.persistence.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "categoria")
+@Table(name = "cd_categoria")
 public class Categoria {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "codigo")
-    private Long codigo;
+    @Column(name = "categoria_id")
+    private Integer id;
     @Column(name = "nome")
     private String nome;
-
 
 }

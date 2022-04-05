@@ -1,6 +1,6 @@
-package com.mylib.repository;
+package com.mylib.cadastro.repository;
 
-import com.mylib.model.Usuario;
+import com.mylib.cadastro.model.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

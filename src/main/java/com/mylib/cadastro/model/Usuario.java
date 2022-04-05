@@ -1,7 +1,7 @@
-package com.mylib.model;
+package com.mylib.cadastro.model;
 
 
-import com.mylib.enums.NivelAcesso;
+import com.mylib.cadastro.enums.NivelAcesso;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
