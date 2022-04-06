@@ -1,7 +1,6 @@
 package com.mylib.cadastro.model;
 
-import com.mylib.cadastro.controller.CategoriaController;
-import com.mylib.cadastro.repository.CategoriaRepository;
+import com.mylib.cadastro.entidade.Entidade;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,12 +9,12 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Data
-@Entity
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
 @Table(name = "cd_categoria")
-public class Categoria {
+public class Categoria implements Entidade<Integer> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,5 +22,6 @@ public class Categoria {
     private Integer id;
     @Column(name = "nome")
     private String nome;
+
 
 }
