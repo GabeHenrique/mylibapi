@@ -9,16 +9,15 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Data
-@Builder
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
 @Table(name = "cd_categoria")
 public class Categoria implements Entidade<Integer> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "categoria_id")
+    @Column(name = "codigo")
     private Integer id;
     @Column(name = "nome")
     private String nome;

@@ -1,7 +1,6 @@
 package com.mylib.cadastro.model;
 
 
-import com.mylib.cadastro.enums.Categoria;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,9 +10,8 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "cd_produto")
 public class Produto {
 
@@ -27,8 +25,8 @@ public class Produto {
     @Column(name = "preco_venda")
     private Double precoVenda;
     private String descricao;
-//    @ManyToOne(targetEntity = Categoria.class)
-//    @JoinColumn(name = "categoria_id")
+    @ManyToOne
+    @JoinColumn(name = "categoria")
     private Categoria categoria;
     @Column(name = "considera_estoque")
     private Boolean consideraEstoque;
