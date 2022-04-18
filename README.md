@@ -1,4 +1,4 @@
-![Logo of the project](<blockquote class="imgur-embed-pub" lang="en" data-id="a/BYI52gV" data-context="false" ><a href="//imgur.com/a/BYI52gV"></a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>)
+![Logo of the project](https://github.com/GabeHenrique/mylibapi/issues/1#issue-1207400610)
 
 # MyLib API
 > Back-end do Projeto MyLib
