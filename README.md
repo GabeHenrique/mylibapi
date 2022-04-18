@@ -1,4 +1,4 @@
-![Logo of the project](https://github.com/GabeHenrique/mylibapi/issues/1#issue-1207400610)
+![Logo MyLib - Branco(1)](https://user-images.githubusercontent.com/94563041/163869457-e2bd4a41-86e4-473f-a6bc-1c1433f3e1ea.png)
 
 # MyLib API
 > Back-end do Projeto MyLib
