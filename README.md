@@ -1,4 +1,4 @@
-<!-- ![Logo of the project](https://raw.githubusercontent.com/jehna/readme-best-practices/master/sample-logo.png)-->
+![Logo of the project](https://drive.google.com/file/d/1UYa3VX_5Nk9ZIw_QRvFxWmc21s0MI0co/view?usp=sharing)
 
 # MyLib API
 > Back-end do Projeto MyLib
