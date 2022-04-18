@@ -1,4 +1,4 @@
-![Logo of the project](https://photos.app.goo.gl/jRpGSbLCjzaHKkZq5)
+![Logo of the project](https://photos.google.com/photo/AF1QipPEQTJrnRykvccAxRj2N5eiimh6IYf_UaJfMlt1)
 
 # MyLib API
 > Back-end do Projeto MyLib
