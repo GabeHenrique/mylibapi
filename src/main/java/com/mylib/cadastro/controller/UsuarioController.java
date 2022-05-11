@@ -1,13 +1,14 @@
 package com.mylib.cadastro.controller;
 
+import com.mylib.cadastro.dto.UsuarioDto;
 import com.mylib.cadastro.model.Usuario;
 import com.mylib.cadastro.repository.UsuarioRepository;
+import com.mylib.cadastro.service.UsuarioService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.servlet.http.HttpServletResponse;
-import java.net.URI;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,30 +16,41 @@ import java.util.Optional;
 @RequestMapping("/usuario")
 public class UsuarioController {
 
-    private final UsuarioRepository usuarioRepository;
+    private final UsuarioRepository repository;
+    private final UsuarioService service;
 
-    public UsuarioController(UsuarioRepository usuarioRepository) {
-        this.usuarioRepository = usuarioRepository;
+    public UsuarioController(UsuarioRepository repository, UsuarioService service) {
+        this.repository = repository;
+        this.service = service;
     }
 
     @GetMapping
     public ResponseEntity<?> listar() {
-        List<Usuario> usuarios = usuarioRepository.findAll();
+        List<?> usuarios = service.listUsuarios();
         return !usuarios.isEmpty() ? ResponseEntity.ok(usuarios) : ResponseEntity.noContent().build();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> buscarPelaId(@PathVariable Integer id) {
-        Optional<Usuario> usuario = usuarioRepository.findById(id);
+        Optional<UsuarioDto> usuario = repository.findById(id).map(UsuarioDto::transformaEmDTO);
         return usuario.isPresent() ? ResponseEntity.ok(usuario) : ResponseEntity.noContent().build();
     }
 
     @PostMapping
-    public ResponseEntity<Usuario> criar(@RequestBody Usuario usuario, HttpServletResponse response) {
-        Usuario usuarioSalvo = usuarioRepository.save(usuario);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}")
-                .buildAndExpand(usuarioSalvo.getId()).toUri();
-        response.setHeader("Location", uri.toASCIIString());
-        return ResponseEntity.created(uri).body(usuarioSalvo);
+    @ResponseStatus(HttpStatus.CREATED)
+    public void criar(@RequestBody Usuario usuario) {
+        repository.save(usuario);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Integer id) {
+        repository.deleteById(id);
+    }
+
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void atualizar(@PathVariable Integer id, @Valid @RequestBody Usuario usuario) {
+        service.atualizar(id, usuario);
     }
 }
