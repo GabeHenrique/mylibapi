@@ -25,15 +25,13 @@ public class UsuarioController {
     }
 
     @GetMapping
-    public ResponseEntity<?> listar() {
-        List<?> usuarios = service.listUsuarios();
-        return !usuarios.isEmpty() ? ResponseEntity.ok(usuarios) : ResponseEntity.noContent().build();
+    public List<?> listar() {
+        return service.listUsuarios();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> buscarPelaId(@PathVariable Integer id) {
-        Optional<UsuarioDto> usuario = repository.findById(id).map(UsuarioDto::transformaEmDTO);
-        return usuario.isPresent() ? ResponseEntity.ok(usuario) : ResponseEntity.noContent().build();
+    public Optional<?> buscarPelaId(@PathVariable Integer id) {
+        return repository.findById(id).map(UsuarioDto::transformaEmDTO);
     }
 
     @PostMapping
