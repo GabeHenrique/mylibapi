@@ -48,6 +48,7 @@ public class UsuarioController {
     }
 
     @PostMapping("/role")
+    @ResponseStatus(HttpStatus.CREATED)
     public Usuario role (@RequestBody CreateUserRoleDTO createUserRoleDTO) {
         return roleUserService.create(createUserRoleDTO);
     }

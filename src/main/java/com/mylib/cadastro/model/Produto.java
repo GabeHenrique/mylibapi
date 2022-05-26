@@ -1,8 +1,8 @@
 package com.mylib.cadastro.model;
 
 
+import com.mylib.cadastro.enums.Categoria;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -25,8 +25,8 @@ public class Produto {
     @Column(name = "preco_venda")
     private Double precoVenda;
     private String descricao;
-    @JoinColumn(name = "categoria")
-    private Enum categoria;
+    @Column(name = "categoria")
+    private Categoria categoria;
     @Column(name = "considera_estoque")
     private Boolean consideraEstoque;
     @Column(name = "ind_ativo")

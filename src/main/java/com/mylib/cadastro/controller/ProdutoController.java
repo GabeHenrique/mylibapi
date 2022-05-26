@@ -32,6 +32,7 @@ public class ProdutoController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public void criar(@RequestBody Produto produto) {
         repository.save(produto);
     }
