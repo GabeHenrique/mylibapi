@@ -30,5 +30,7 @@ public class Produto {
     private Categoria categoria;
     @Column(name = "considera_estoque")
     private Boolean consideraEstoque;
+    @Column(name = "ind_ativo")
+    private Boolean ativo;
 
 }
