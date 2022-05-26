@@ -25,9 +25,8 @@ public class Produto {
     @Column(name = "preco_venda")
     private Double precoVenda;
     private String descricao;
-    @ManyToOne
     @JoinColumn(name = "categoria")
-    private Categoria categoria;
+    private Enum categoria;
     @Column(name = "considera_estoque")
     private Boolean consideraEstoque;
     @Column(name = "ind_ativo")

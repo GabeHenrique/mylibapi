@@ -5,6 +5,7 @@ import com.mylib.cadastro.model.Usuario;
 import com.mylib.cadastro.repository.UsuarioRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,6 +28,18 @@ public class UsuarioService {
         return pessoaSalva;
     }
 
+    private BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    public void criarUsuario(Usuario usuario) {
+        if(repository.findByEmail(usuario.getEmail()) != null) {
+            throw new Error("Usuário já cadastrado");
+        }
+        usuario.setSenha(passwordEncoder().encode(usuario.getSenha()));
+        repository.save(usuario);
+    }
+
     public void atualizar(Integer id, Usuario usuario) {
         Usuario usuarioSalvo = getPessoa(id);
         BeanUtils.copyProperties(usuario, usuarioSalvo, "id");
@@ -37,7 +50,4 @@ public class UsuarioService {
         return repository.findAll().stream().map(UsuarioDto::transformaEmDTO).collect(Collectors.toList());
     }
 
-    public UsuarioDto toUsuarioDto(Usuario usuario) {
-        return new UsuarioDto(usuario.getId(), usuario.getNome(), usuario.getEmail(), usuario.getTelefone(), usuario.getNivelAcesso());
-    }
 }

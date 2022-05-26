@@ -1,17 +1,21 @@
 package com.mylib.cadastro.controller;
 
+import com.mylib.cadastro.dto.CreateUserRoleDTO;
 import com.mylib.cadastro.dto.UsuarioDto;
 import com.mylib.cadastro.model.Usuario;
 import com.mylib.cadastro.repository.UsuarioRepository;
+import com.mylib.cadastro.service.CreateRoleUserService;
 import com.mylib.cadastro.service.UsuarioService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
+@PreAuthorize("hasRole('ADMIN')")
 @RestController
 @RequestMapping("/usuario")
 public class UsuarioController {
@@ -19,9 +23,12 @@ public class UsuarioController {
     private final UsuarioRepository repository;
     private final UsuarioService service;
 
-    public UsuarioController(UsuarioRepository repository, UsuarioService service) {
+    private final CreateRoleUserService roleUserService;
+
+    public UsuarioController(UsuarioRepository repository, UsuarioService service, CreateRoleUserService roleUserService) {
         this.repository = repository;
         this.service = service;
+        this.roleUserService = roleUserService;
     }
 
     @GetMapping
@@ -34,10 +41,15 @@ public class UsuarioController {
         return repository.findById(id).map(UsuarioDto::transformaEmDTO);
     }
 
-    @PostMapping
+    @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public void criar(@RequestBody Usuario usuario) {
-        repository.save(usuario);
+        service.criarUsuario(usuario);
+    }
+
+    @PostMapping("/role")
+    public Usuario role (@RequestBody CreateUserRoleDTO createUserRoleDTO) {
+        return roleUserService.create(createUserRoleDTO);
     }
 
     @DeleteMapping("/{id}")
