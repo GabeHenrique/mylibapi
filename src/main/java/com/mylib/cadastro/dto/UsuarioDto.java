@@ -1,6 +1,7 @@
 package com.mylib.cadastro.dto;
 
 import com.mylib.ObjectUtils;
+import com.mylib.cadastro.model.Role;
 import com.mylib.cadastro.model.Usuario;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,7 +20,7 @@ public class UsuarioDto {
     private String nome;
     private String email;
     private String telefone;
-    private List<?> roles;
+    private List<Role> roles;
 
     public static UsuarioDto transformaEmDTO(Usuario usuario) {
         return ObjectUtils.convert(usuario, UsuarioDto.class);

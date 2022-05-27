@@ -43,6 +43,12 @@ public class UsuarioController {
         return repository.findById(id).map(UsuarioDto::transformaEmDTO);
     }
 
+    @GetMapping("userInfo/{email}")
+    public Optional<?> buscarPeloEmail(@PathVariable String email) {
+        Integer pessoaId = repository.findByEmail(email).getId();
+        return repository.findById(pessoaId).map(UsuarioDto::transformaEmDTO);
+    }
+
     @PostMapping("/login")
     public Boolean exists(@RequestBody Usuario usuario) {
         Usuario usuarioFind = repository.findByEmail(usuario.getEmail());

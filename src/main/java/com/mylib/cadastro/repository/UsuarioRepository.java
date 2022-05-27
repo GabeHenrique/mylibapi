@@ -15,7 +15,4 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
     Optional<Usuario> findById(Integer idUser);
 
-    @Query("SELECT u from Usuario u JOIN FETCH u.roles where u.email = :email")
-    Usuario findByEmailFetchRoles(@Param("email") String email);
-
 }
