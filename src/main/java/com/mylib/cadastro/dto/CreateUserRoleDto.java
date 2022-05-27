@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class CreateUserRoleDTO {
+public class CreateUserRoleDto {
 
     private Integer idUser;
     private List<Integer> idsRoles;

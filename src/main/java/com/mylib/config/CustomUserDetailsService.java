@@ -19,7 +19,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Usuario existsUser = usuarioRepository.findByEmail(email);
-        if(existsUser == null) {
+        if (existsUser == null) {
             throw new Error("Usuário não cadastrado");
         }
         return UserPrincipal.create(existsUser);

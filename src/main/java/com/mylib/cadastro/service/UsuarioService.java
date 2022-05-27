@@ -33,7 +33,7 @@ public class UsuarioService {
     }
 
     public void criarUsuario(Usuario usuario) {
-        if(repository.findByEmail(usuario.getEmail()) != null) {
+        if (repository.findByEmail(usuario.getEmail()) != null) {
             throw new Error("Usuário já cadastrado");
         }
         usuario.setSenha(passwordEncoder().encode(usuario.getSenha()));

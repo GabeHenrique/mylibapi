@@ -1,9 +1,8 @@
 package com.mylib.cadastro.controller;
 
 import com.mylib.cadastro.model.Produto;
-import com.mylib.cadastro.model.Usuario;
 import com.mylib.cadastro.repository.ProdutoRepository;
-import org.springframework.beans.BeanUtils;
+import com.mylib.cadastro.service.ProdutoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,9 +15,11 @@ import java.util.Optional;
 public class ProdutoController {
 
     private final ProdutoRepository repository;
+    private final ProdutoService service;
 
-    public ProdutoController(ProdutoRepository produtoRepository) {
+    public ProdutoController(ProdutoRepository produtoRepository, ProdutoService produtoService) {
         this.repository = produtoRepository;
+        this.service = produtoService;
     }
 
     @GetMapping
@@ -35,6 +36,12 @@ public class ProdutoController {
     @ResponseStatus(HttpStatus.CREATED)
     public void criar(@RequestBody Produto produto) {
         repository.save(produto);
+    }
+
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void atualizar(@PathVariable Integer id, @Valid @RequestBody Produto produto) {
+        service.atualizar(id, produto);
     }
 
     @DeleteMapping("/{id}")

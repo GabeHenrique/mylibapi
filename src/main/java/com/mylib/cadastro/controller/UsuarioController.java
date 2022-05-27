@@ -1,6 +1,6 @@
 package com.mylib.cadastro.controller;
 
-import com.mylib.cadastro.dto.CreateUserRoleDTO;
+import com.mylib.cadastro.dto.CreateUserRoleDto;
 import com.mylib.cadastro.dto.UsuarioDto;
 import com.mylib.cadastro.model.Usuario;
 import com.mylib.cadastro.repository.UsuarioRepository;
@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 //@PreAuthorize("hasRole('ADMIN')")
@@ -22,13 +21,11 @@ public class UsuarioController {
 
     private final UsuarioRepository repository;
     private final UsuarioService service;
+    private final CreateRoleUserService roleUserService;
 
     private BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-
-    private final CreateRoleUserService roleUserService;
 
     public UsuarioController(UsuarioRepository repository, UsuarioService service, CreateRoleUserService roleUserService) {
         this.repository = repository;
@@ -51,8 +48,7 @@ public class UsuarioController {
         Usuario usuarioFind = repository.findByEmail(usuario.getEmail());
         if (usuarioFind != null) {
             return passwordEncoder().matches(usuario.getSenha(), usuarioFind.getSenha());
-        }
-        else return false;
+        } else return false;
     }
 
     @PostMapping("/create")
@@ -63,7 +59,7 @@ public class UsuarioController {
 
     @PostMapping("/role")
     @ResponseStatus(HttpStatus.CREATED)
-    public Usuario role (@RequestBody CreateUserRoleDTO createUserRoleDTO) {
+    public Usuario role(@RequestBody CreateUserRoleDto createUserRoleDTO) {
         return roleUserService.create(createUserRoleDTO);
     }
 

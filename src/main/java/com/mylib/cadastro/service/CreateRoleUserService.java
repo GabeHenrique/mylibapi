@@ -1,6 +1,6 @@
 package com.mylib.cadastro.service;
 
-import com.mylib.cadastro.dto.CreateUserRoleDTO;
+import com.mylib.cadastro.dto.CreateUserRoleDto;
 import com.mylib.cadastro.model.Role;
 import com.mylib.cadastro.model.Usuario;
 import com.mylib.cadastro.repository.UsuarioRepository;
@@ -19,7 +19,7 @@ public class CreateRoleUserService {
         this.repository = repository;
     }
 
-    public Usuario create(CreateUserRoleDTO createUserRoleDTO) {
+    public Usuario create(CreateUserRoleDto createUserRoleDTO) {
 
         Optional<Usuario> userExists = repository.findById(createUserRoleDTO.getIdUser());
         List<Role> roles;
