@@ -7,13 +7,13 @@ import com.mylib.cadastro.repository.UsuarioRepository;
 import com.mylib.cadastro.service.CreateRoleUserService;
 import com.mylib.cadastro.service.UsuarioService;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
-import java.util.UUID;
 
 //@PreAuthorize("hasRole('ADMIN')")
 @RestController
@@ -22,6 +22,11 @@ public class UsuarioController {
 
     private final UsuarioRepository repository;
     private final UsuarioService service;
+
+    private BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
 
     private final CreateRoleUserService roleUserService;
 
@@ -39,6 +44,15 @@ public class UsuarioController {
     @GetMapping("/{id}")
     public Optional<?> buscarPelaId(@PathVariable Integer id) {
         return repository.findById(id).map(UsuarioDto::transformaEmDTO);
+    }
+
+    @PostMapping("/login")
+    public Boolean exists(@RequestBody Usuario usuario) {
+        Usuario usuarioFind = repository.findByEmail(usuario.getEmail());
+        if (usuarioFind != null) {
+            return passwordEncoder().matches(usuario.getSenha(), usuarioFind.getSenha());
+        }
+        else return false;
     }
 
     @PostMapping("/create")
