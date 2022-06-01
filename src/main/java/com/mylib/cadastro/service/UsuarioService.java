@@ -43,6 +43,7 @@ public class UsuarioService {
     public void atualizar(Integer id, Usuario usuario) {
         Usuario usuarioSalvo = getPessoa(id);
         BeanUtils.copyProperties(usuario, usuarioSalvo, "id");
+        usuarioSalvo.setSenha(passwordEncoder().encode(usuario.getSenha()));
         repository.save(usuarioSalvo);
     }
 

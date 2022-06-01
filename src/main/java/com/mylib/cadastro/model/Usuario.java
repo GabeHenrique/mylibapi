@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Data
@@ -20,10 +22,20 @@ public class Usuario {
     @Id
     @GeneratedValue
     private Integer id;
+    @NotNull
+    @NotEmpty
     private String nome;
+    @NotNull
+    @NotEmpty
     private String email;
+    @NotNull
+    @NotEmpty
     private String senha;
+    @NotNull
+    @NotEmpty
     private String telefone;
+    @NotNull
+    @NotEmpty
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Role> roles;
 

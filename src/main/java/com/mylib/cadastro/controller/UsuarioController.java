@@ -52,9 +52,10 @@ public class UsuarioController {
     @PostMapping("/login")
     public Boolean exists(@RequestBody Usuario usuario) {
         Usuario usuarioFind = repository.findByEmail(usuario.getEmail());
-        if (usuarioFind != null) {
-            return passwordEncoder().matches(usuario.getSenha(), usuarioFind.getSenha());
-        } else return false;
+        if (usuarioFind == null) {
+            throw new IllegalArgumentException("Usuário ou senha inválida");
+        }
+        return passwordEncoder().matches(usuario.getSenha(), usuarioFind.getSenha());
     }
 
     @PostMapping("/create")
