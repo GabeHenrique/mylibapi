@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.sql.Blob;
 import java.util.List;
 
 @AllArgsConstructor
@@ -21,6 +22,7 @@ public class UsuarioDto {
     private String email;
     private String telefone;
     private List<Role> roles;
+    private Blob imagem;
 
     public static UsuarioDto transformaEmDTO(Usuario usuario) {
         return ObjectUtils.convert(usuario, UsuarioDto.class);

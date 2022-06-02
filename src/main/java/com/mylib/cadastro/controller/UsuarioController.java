@@ -64,6 +64,16 @@ public class UsuarioController {
         service.criarUsuario(usuario);
     }
 
+//    @PostMapping("/{id}/imagem")
+//    @ResponseStatus(HttpStatus.ACCEPTED)
+//    public void uploadImagem(@PathVariable Integer id, File file) throws IOException {
+//        ImagemUsuario imagemUsuario = new ImagemUsuario();
+//        byte[] fileContent = FileUtils.readFileToByteArray(file);
+//        String encodedString = Base64.getEncoder().encodeToString(fileContent);
+//        imagemUsuario.setUsuario(repository.findUsuarioById(id));
+//        imagemUsuario.setImagemBase64(encodedString);
+//    }
+
     @PostMapping("/role")
     @ResponseStatus(HttpStatus.CREATED)
     public Usuario role(@RequestBody CreateUserRoleDto createUserRoleDTO) {
