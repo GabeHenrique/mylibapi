@@ -38,7 +38,5 @@ public class Usuario {
     @NotEmpty
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Role> roles;
-//    @Type(type = "java.sql.Blob")
     private Byte[] imagem;
-
 }

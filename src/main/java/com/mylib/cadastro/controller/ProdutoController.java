@@ -3,6 +3,7 @@ package com.mylib.cadastro.controller;
 import com.mylib.cadastro.model.Produto;
 import com.mylib.cadastro.repository.ProdutoRepository;
 import com.mylib.cadastro.service.ProdutoService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,15 +13,11 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/produto")
+@RequiredArgsConstructor
 public class ProdutoController {
 
     private final ProdutoRepository repository;
     private final ProdutoService service;
-
-    public ProdutoController(ProdutoRepository produtoRepository, ProdutoService produtoService) {
-        this.repository = produtoRepository;
-        this.service = produtoService;
-    }
 
     @GetMapping
     public List<?> listar() {

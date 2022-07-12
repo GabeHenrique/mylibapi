@@ -6,6 +6,7 @@ import com.mylib.cadastro.model.Usuario;
 import com.mylib.cadastro.repository.UsuarioRepository;
 import com.mylib.cadastro.service.CreateRoleUserService;
 import com.mylib.cadastro.service.UsuarioService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -14,9 +15,9 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
-//@PreAuthorize("hasRole('ADMIN')")
 @RestController
 @RequestMapping("/usuario")
+@RequiredArgsConstructor
 public class UsuarioController {
 
     private final UsuarioRepository repository;
@@ -25,12 +26,6 @@ public class UsuarioController {
 
     private BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-    }
-
-    public UsuarioController(UsuarioRepository repository, UsuarioService service, CreateRoleUserService roleUserService) {
-        this.repository = repository;
-        this.service = service;
-        this.roleUserService = roleUserService;
     }
 
     @GetMapping
@@ -63,16 +58,6 @@ public class UsuarioController {
     public void criar(@RequestBody Usuario usuario) {
         service.criarUsuario(usuario);
     }
-
-//    @PostMapping("/{id}/imagem")
-//    @ResponseStatus(HttpStatus.ACCEPTED)
-//    public void uploadImagem(@PathVariable Integer id, File file) throws IOException {
-//        ImagemUsuario imagemUsuario = new ImagemUsuario();
-//        byte[] fileContent = FileUtils.readFileToByteArray(file);
-//        String encodedString = Base64.getEncoder().encodeToString(fileContent);
-//        imagemUsuario.setUsuario(repository.findUsuarioById(id));
-//        imagemUsuario.setImagemBase64(encodedString);
-//    }
 
     @PostMapping("/role")
     @ResponseStatus(HttpStatus.CREATED)
