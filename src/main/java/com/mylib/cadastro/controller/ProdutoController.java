@@ -1,7 +1,6 @@
 package com.mylib.cadastro.controller;
 
 import com.mylib.cadastro.model.Produto;
-import com.mylib.cadastro.repository.ProdutoRepository;
 import com.mylib.cadastro.service.ProdutoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,23 +15,22 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ProdutoController {
 
-    private final ProdutoRepository repository;
     private final ProdutoService service;
 
     @GetMapping
-    public List<?> listar() {
-        return repository.findAll();
+    public List<Produto> listar() {
+        return service.listar();
     }
 
     @GetMapping("/{id}")
-    public Optional<?> buscarPelaId(@PathVariable Integer id) {
-        return repository.findById(id);
+    public Optional<Produto> buscarPelaId(@PathVariable Integer id) {
+        return service.buscarPelaId(id);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void criar(@RequestBody Produto produto) {
-        repository.save(produto);
+    public void criar(@RequestBody @Valid Produto produto) {
+        service.criar(produto);
     }
 
     @PutMapping("/{id}")
@@ -44,7 +42,7 @@ public class ProdutoController {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Integer id) {
-        repository.deleteById(id);
+        service.deletar(id);
     }
 
 }

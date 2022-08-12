@@ -3,12 +3,10 @@ package com.mylib.cadastro.controller;
 import com.mylib.cadastro.dto.CreateUserRoleDto;
 import com.mylib.cadastro.dto.UsuarioDto;
 import com.mylib.cadastro.model.Usuario;
-import com.mylib.cadastro.repository.UsuarioRepository;
 import com.mylib.cadastro.service.CreateRoleUserService;
 import com.mylib.cadastro.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -20,37 +18,27 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UsuarioController {
 
-    private final UsuarioRepository repository;
     private final UsuarioService service;
     private final CreateRoleUserService roleUserService;
 
-    private BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
     @GetMapping
-    public List<?> listar() {
+    public List<UsuarioDto> listar() {
         return service.listUsuarios();
     }
 
     @GetMapping("/{id}")
-    public Optional<?> buscarPelaId(@PathVariable Integer id) {
-        return repository.findById(id).map(UsuarioDto::transformaEmDTO);
+    public Optional<UsuarioDto> buscarPelaId(@PathVariable Integer id) {
+        return service.getPessoa(id).map(UsuarioDto::transformaEmDTO);
     }
 
     @GetMapping("userInfo/{email}")
-    public Optional<?> buscarPeloEmail(@PathVariable String email) {
-        Integer pessoaId = repository.findByEmail(email).getId();
-        return repository.findById(pessoaId).map(UsuarioDto::transformaEmDTO);
+    public Optional<UsuarioDto> buscarPeloEmail(@PathVariable String email) {
+        return service.getPessoaByEmail(email);
     }
 
     @PostMapping("/login")
     public Boolean exists(@RequestBody Usuario usuario) {
-        Usuario usuarioFind = repository.findByEmail(usuario.getEmail());
-        if (usuarioFind == null) {
-            throw new IllegalArgumentException("Usuário ou senha inválida");
-        }
-        return passwordEncoder().matches(usuario.getSenha(), usuarioFind.getSenha());
+        return service.exists(usuario);
     }
 
     @PostMapping("/create")
@@ -68,7 +56,7 @@ public class UsuarioController {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Integer id) {
-        repository.deleteById(id);
+        service.deletar(id);
     }
 
     @PutMapping("/{id}")
