@@ -12,4 +12,5 @@ https://github.com/GabeHenrique/Docker-Imagem.git.
 
 Dentro da pasta onde se encontra o docker-compose.yml, rodar o seguinte comando através do shell ou cmd: `docker-compose up`.
 
-O projeto utiliza o maven como gerenciador de dependência e é necessário rodar o comando `mvn install` para download das dependências necessárias e subir a aplicação com o comando `mvn spring-boot:run
+O projeto utiliza o maven como gerenciador de dependência e é necessário rodar o comando `mvn install` para download das dependências necessárias e subir a aplicação com o comando 
+`mvn spring-boot:run`.
