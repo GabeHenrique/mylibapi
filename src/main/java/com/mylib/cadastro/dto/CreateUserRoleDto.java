@@ -1,10 +1,13 @@
 package com.mylib.cadastro.dto;
 
-import lombok.Data;
+import lombok.*;
 
 import java.util.List;
 
-@Data
+@Getter @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class CreateUserRoleDto {
 
     private Integer idUser;

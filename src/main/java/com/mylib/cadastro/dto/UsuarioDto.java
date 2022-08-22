@@ -3,10 +3,7 @@ package com.mylib.cadastro.dto;
 import com.mylib.ObjectUtils;
 import com.mylib.cadastro.model.Role;
 import com.mylib.cadastro.model.Usuario;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.sql.Blob;
 import java.util.List;
@@ -15,6 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
+@EqualsAndHashCode
 public class UsuarioDto {
 
     private Integer id;

@@ -2,15 +2,15 @@ package com.mylib.cadastro.model;
 
 
 import com.mylib.cadastro.enums.Categoria;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
-@Data
+@Getter @Setter
+@Builder
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,19 +19,18 @@ public class Produto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "produto_id")
     private Integer id;
     @NotNull
     @NotEmpty
     private String nome;
     @NotNull
-    @NotEmpty
-    private Integer quantidade;
+    @Column(name = "saldo_estoque")
+    private Integer saldoEstoque;
     @NotNull
-    @NotEmpty
     @Column(name = "preco_fabrica")
     private Double precoFabrica;
     @NotNull
-    @NotEmpty
     @Column(name = "preco_venda")
     private Double precoVenda;
     @NotNull
@@ -41,10 +40,9 @@ public class Produto {
     @Column(name = "categoria")
     private Categoria categoria;
     @NotNull
-    @Column(name = "considera_estoque")
-    private Boolean consideraEstoque;
-    @NotNull
     @Column(name = "ind_ativo")
     private Boolean ativo;
+    @OneToMany(mappedBy = "produto")
+    private List<MovimentoEstoque> movimentos;
 
 }

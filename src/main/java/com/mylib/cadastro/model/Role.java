@@ -1,16 +1,15 @@
 package com.mylib.cadastro.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
+@Getter @Setter
+@Builder
 @Entity
-@Table(name = "sg_roles")
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Table(name = "sg_roles")
 public class Role {
 
     @Id
@@ -22,3 +21,4 @@ public class Role {
         this.id = id;
     }
 }
+
