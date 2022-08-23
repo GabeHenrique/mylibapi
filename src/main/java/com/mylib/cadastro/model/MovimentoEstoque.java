@@ -7,7 +7,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
-@Getter @Setter
+@Getter
+@Setter
 @Builder
 @Entity
 @NoArgsConstructor
@@ -17,6 +18,7 @@ public class MovimentoEstoque {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "movimentacao_id")
     private Integer id;
     @NotNull
     @Column(name = "tipo_movimentacao")

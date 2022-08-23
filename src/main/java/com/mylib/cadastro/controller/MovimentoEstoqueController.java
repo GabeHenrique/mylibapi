@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -45,7 +46,7 @@ public class MovimentoEstoqueController {
     )
     @PostMapping("/criar/{idProduto}")
     @ResponseStatus(HttpStatus.CREATED)
-    public void criar(@RequestBody MovimentoEstoque movimentoEstoque, @PathVariable Integer idProduto) {
+    public void criar(@RequestBody @Valid MovimentoEstoque movimentoEstoque, @PathVariable Integer idProduto) {
         service.criar(movimentoEstoque, idProduto);
     }
 }

@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 public class UsuarioService {
 
     private final UsuarioRepository repository;
+
     private BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
@@ -32,10 +34,16 @@ public class UsuarioService {
 
     public Boolean exists(Usuario usuario) {
         Usuario usuarioFind = repository.findByEmail(usuario.getEmail());
-        if (usuarioFind == null) {
+        var validaSenha = passwordEncoder().matches(usuario.getSenha(), usuarioFind.getSenha());
+        if (usuarioFind == null || !validaSenha) {
             throw new IllegalArgumentException("Usuário ou senha inválida");
         }
-        return passwordEncoder().matches(usuario.getSenha(), usuarioFind.getSenha());
+        return validaSenha;
+    }
+
+    @ApiIgnore
+    public Integer tokenEmpresa(Integer idUsuario) {
+        return repository.findById(idUsuario).orElseThrow().getEmpresa().getId();
     }
 
     public void criarUsuario(Usuario usuario) {
@@ -48,7 +56,7 @@ public class UsuarioService {
     }
 
     public void atualizar(Integer id, Usuario usuario) {
-        var usuarioSalvo = getPessoa(id).get();
+        var usuarioSalvo = getPessoa(id).orElseThrow();
         BeanUtils.copyProperties(usuario, usuarioSalvo, "id");
         usuarioSalvo.setSenha(passwordEncoder().encode(usuario.getSenha()));
         repository.save(usuarioSalvo);
@@ -58,7 +66,7 @@ public class UsuarioService {
         return repository.findAll().stream().map(UsuarioDto::transformaEmDTO).collect(Collectors.toList());
     }
 
-    public void deletar(Integer id){
+    public void deletar(Integer id) {
         repository.deleteById(id);
     }
 }

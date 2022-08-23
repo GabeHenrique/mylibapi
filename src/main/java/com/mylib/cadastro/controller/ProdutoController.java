@@ -1,5 +1,6 @@
 package com.mylib.cadastro.controller;
 
+import com.mylib.cadastro.dto.ProdutoDto;
 import com.mylib.cadastro.dto.ProdutoEstoqueDto;
 import com.mylib.cadastro.model.Produto;
 import com.mylib.cadastro.service.ProdutoService;
@@ -27,8 +28,8 @@ public class ProdutoController {
         description = "É a listagem de todos os produtos"
     )
     @GetMapping
-    public List<Produto> listar() {
-        return service.listar();
+    public List<ProdutoDto> listar(@RequestParam Integer idUsuario) {
+        return service.listar(idUsuario);
     }
 
     @Operation(
@@ -37,8 +38,8 @@ public class ProdutoController {
         tags = {"Movimento de Estoque"}
     )
     @GetMapping("/tela-estoque")
-    public List<ProdutoEstoqueDto> listarTelaEstoque() {
-        return service.listar().stream().map(ProdutoEstoqueDto::transformaEmDTO).collect(Collectors.toList());
+    public List<ProdutoEstoqueDto> listarTelaEstoque(@RequestParam Integer idUsuario) {
+        return service.listar(idUsuario).stream().map(ProdutoEstoqueDto::dtoToDto).collect(Collectors.toList());
     }
 
     @Operation(
@@ -46,8 +47,8 @@ public class ProdutoController {
         description = "É a busca de um produto por Id"
     )
     @GetMapping("/{id}")
-    public Optional<Produto> buscarPelaId(@PathVariable Integer id) {
-        return service.buscarPelaId(id);
+    public Optional<ProdutoDto> buscarPelaId(@PathVariable Integer id, @RequestParam Integer idUsuario) {
+        return service.buscarPelaId(id, idUsuario);
     }
 
     @Operation(
@@ -56,8 +57,8 @@ public class ProdutoController {
     )
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void criar(@RequestBody @Valid Produto produto) {
-        service.criar(produto);
+    public void criar(@RequestBody @Valid Produto produto, @RequestParam Integer idUsuario) {
+        service.criar(produto, idUsuario);
     }
 
     @Operation(

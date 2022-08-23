@@ -5,7 +5,6 @@ import com.mylib.cadastro.model.Role;
 import com.mylib.cadastro.model.Usuario;
 import lombok.*;
 
-import java.sql.Blob;
 import java.util.List;
 
 @AllArgsConstructor
@@ -20,7 +19,7 @@ public class UsuarioDto {
     private String email;
     private String telefone;
     private List<Role> roles;
-    private Blob imagem;
+    private Integer empresaId;
 
     public static UsuarioDto transformaEmDTO(Usuario usuario) {
         return ObjectUtils.convert(usuario, UsuarioDto.class);

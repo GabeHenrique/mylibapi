@@ -1,7 +1,6 @@
 package com.mylib.cadastro.dto;
 
 import com.mylib.ObjectUtils;
-import com.mylib.cadastro.model.Produto;
 import lombok.*;
 
 @AllArgsConstructor
@@ -15,8 +14,8 @@ public class ProdutoEstoqueDto {
     private String nome;
     private Integer saldoEstoque;
 
-    public static ProdutoEstoqueDto transformaEmDTO(Produto produto) {
-        return ObjectUtils.convert(produto, ProdutoEstoqueDto.class);
+    public static ProdutoEstoqueDto dtoToDto(ProdutoDto dto) {
+        return ObjectUtils.convert(dto, ProdutoEstoqueDto.class);
     }
 
 }

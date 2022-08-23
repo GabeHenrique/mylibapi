@@ -1,5 +1,6 @@
 package com.mylib.cadastro.service;
 
+import com.mylib.cadastro.dto.ProdutoDto;
 import com.mylib.cadastro.enums.TipoMovimentacao;
 import com.mylib.cadastro.model.MovimentoEstoque;
 import com.mylib.cadastro.model.Produto;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -18,17 +20,25 @@ public class ProdutoService {
 
     private final ProdutoRepository repository;
     private final MovimentoEstoqueService movimentoEstoqueService;
+    private final UsuarioService usuarioService;
+    private final EmpresaService empresaService;
 
-    public List<Produto> listar() {
-        return repository.findAll();
+    public List<ProdutoDto> listar(Integer idUsuario) {
+        var token = usuarioService.tokenEmpresa(idUsuario);
+        return repository.findAllByEmpresaId(token).stream()
+            .map(ProdutoDto::transformaEmDto)
+            .collect(Collectors.toList());
     }
 
-    public Optional<Produto> buscarPelaId(Integer id) {
-        return repository.findById(id);
+    public Optional<ProdutoDto> buscarPelaId(Integer id, Integer idUsuario) {
+        var token = usuarioService.tokenEmpresa(idUsuario);
+        return repository.findByIdAndEmpresaId(id, token).map(ProdutoDto::transformaEmDto);
     }
 
-    public void criar(Produto produto) {
+    public void criar(Produto produto, Integer idUsuario) {
         if (produto.getSaldoEstoque() != null) {
+            var empresa = empresaService.buscarPelaId(usuarioService.tokenEmpresa(idUsuario)).orElseThrow();
+            produto.setEmpresa(empresa);
             repository.save(produto);
             var movimento = new MovimentoEstoque();
             movimento.setTipoMovimentacao(TipoMovimentacao.ENTRADA);

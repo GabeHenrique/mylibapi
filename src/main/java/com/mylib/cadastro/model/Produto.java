@@ -1,15 +1,18 @@
 package com.mylib.cadastro.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mylib.cadastro.enums.Categoria;
 import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
 import java.util.List;
 
-@Getter @Setter
+@Getter
+@Setter
 @Builder
 @Entity
 @NoArgsConstructor
@@ -25,8 +28,9 @@ public class Produto {
     @NotEmpty
     private String nome;
     @NotNull
+    @PositiveOrZero
     @Column(name = "saldo_estoque")
-    private Integer saldoEstoque;
+    private Integer saldoEstoque = 0;
     @NotNull
     @Column(name = "preco_fabrica")
     private Double precoFabrica;
@@ -35,6 +39,7 @@ public class Produto {
     private Double precoVenda;
     @NotNull
     @NotEmpty
+    @Column(name = "descricao")
     private String descricao;
     @NotNull
     @Column(name = "categoria")
@@ -42,7 +47,12 @@ public class Produto {
     @NotNull
     @Column(name = "ind_ativo")
     private Boolean ativo;
+    @JsonIgnore
     @OneToMany(mappedBy = "produto")
     private List<MovimentoEstoque> movimentos;
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "empresa_id")
+    private Empresa empresa;
 
 }
