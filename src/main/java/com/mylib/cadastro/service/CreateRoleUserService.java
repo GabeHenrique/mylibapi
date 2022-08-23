@@ -7,8 +7,6 @@ import com.mylib.cadastro.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -18,13 +16,12 @@ public class CreateRoleUserService {
     private final UsuarioRepository repository;
 
     public Usuario create(CreateUserRoleDto createUserRoleDTO) {
-        Optional<Usuario> userExists = repository.findById(createUserRoleDTO.getIdUser());
-        List<Role> roles;
+        var userExists = repository.findById(createUserRoleDTO.getIdUser());
         if (userExists.isEmpty()) {
             throw new Error("User does not exists!");
         }
-        roles = createUserRoleDTO.getIdsRoles().stream().map(Role::new).collect(Collectors.toList());
-        Usuario usuario = userExists.get();
+        var roles = createUserRoleDTO.getIdsRoles().stream().map(Role::new).collect(Collectors.toList());
+        var usuario = userExists.get();
         usuario.setRoles(roles);
         repository.save(usuario);
         return usuario;

@@ -50,7 +50,7 @@ public class ProdutoService {
     }
 
     private Produto getProduto(Integer id) {
-        Produto produtoSalvo = repository.findById(id).orElse(null);
+        var produtoSalvo = repository.findById(id).orElse(null);
         if (produtoSalvo == null) {
             throw new EmptyResultDataAccessException(1);
         }
@@ -58,13 +58,13 @@ public class ProdutoService {
     }
 
     public void atualizar(Integer id, Produto produto) {
-        Produto produtoSalvo = getProduto(id);
+        var produtoSalvo = getProduto(id);
         BeanUtils.copyProperties(produto, produtoSalvo, "id");
         repository.save(produtoSalvo);
     }
 
     public void deletar(Integer id) {
-        Produto produtoSalvo = getProduto(id);
+        var produtoSalvo = getProduto(id);
         produtoSalvo.getMovimentos().forEach(movimento -> movimentoEstoqueService.delete(movimento.getId()));
         repository.delete(produtoSalvo);
     }
